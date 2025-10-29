@@ -107,11 +107,13 @@ export const checkSession = async (userId: string) => {
           name: user.name,
           email: user.email,
           isEmailVerified: user.isEmailVerified,
-          entityType: user.entityType
+          entityType: user.entityType,
         },
       },
     };
   }
+
+  // our onboarding logic here will come here now
 
   return {
     message: 'User authenticated.',
@@ -123,7 +125,7 @@ export const checkSession = async (userId: string) => {
         name: user.name,
         email: user.email,
         isEmailVerified: user.isEmailVerified,
-        entityType: user.entityType
+        entityType: user.entityType,
       },
     },
   };

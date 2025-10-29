@@ -1,25 +1,35 @@
 import { Request, Response } from 'express';
-import * as EntityService from '../service/entity.service';
-import { sendSuccess } from '@/utils/apis/responseHandler';
-import { catchAsync } from '@/utils/catchAsync';
-import { HTTP_STATUS, RESPONSE_TAGS } from '@/constants';
+import { HTTP_STATUS } from '@/constants';
+import { getEntityOnboarding, updateEntityOnboarding } from '../service/entity.service';
+import { sendError, sendSuccess } from '@/utils';
 
-export const createEntity = catchAsync(async (req: Request, res: Response) => {
-  const created = await EntityService.createEntityService(req.body, (req as any).user?.id);
-  sendSuccess(res, 'Entity created', created, HTTP_STATUS.CREATED, RESPONSE_TAGS.CREATED);
-});
 
-export const updateEntity = catchAsync(async (req: Request, res: Response) => {
-  const updated = await EntityService.updateEntityService(req.params.id, req.body);
-  sendSuccess(res, 'Entity updated', updated, HTTP_STATUS.OK, RESPONSE_TAGS.UPDATED);
-});
+export const getOnboarding = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const onboarding = await getEntityOnboarding(id);
+    if (!onboarding) {
+      return sendError(res, HTTP_STATUS.NOT_FOUND, 'Entity onboarding not found');
+    }
 
-export const getEntity = catchAsync(async (req: Request, res: Response) => {
-  const entity = await EntityService.getEntityService(req.params.id);
-  sendSuccess(res, 'Entity fetched', entity, HTTP_STATUS.OK, RESPONSE_TAGS.FETCHED);
-});
+    return sendSuccess(res, 'Entity onboarding fetched successfully', onboarding);
+  } catch (err: any) {
+    console.error('Get Onboarding Error:', err);
+    return sendError(res, HTTP_STATUS.INTERNAL_ERROR, 'Failed to fetch onboarding data');
+  }
+};
 
-export const claimEntity = catchAsync(async (req: Request, res: Response) => {
-  const result = await EntityService.claimEntityService((req as any).user?.id, req.body);
-  sendSuccess(res, 'Claim processed', result, HTTP_STATUS.OK, RESPONSE_TAGS.UPDATED);
-});
+export const updateOnboarding = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { currentStepIndex, stepKey, data, status } = req.body;
+    const userId = (req as any).user?._id;
+
+    const updated = await updateEntityOnboarding(id, { currentStepIndex, stepKey, data, status, userId });
+
+    return sendSuccess(res, 'Onboarding step updated successfully', updated);
+  } catch (err: any) {
+    console.error('Update Onboarding Error:', err);
+    return sendError(res, HTTP_STATUS.INTERNAL_ERROR, 'Failed to update onboarding');
+  }
+};

@@ -1,22 +1,11 @@
+import { authenticate } from '@/middleware';
 import { Router } from 'express';
-import {
-  createEntity,
-  updateEntity,
-  getEntity,
-  claimEntity,
-} from '../controllers/entity.controller';
-import { validateSchema } from '@/middleware';
-import {
-  createEntitySchema,
-  updateEntitySchema,
-  claimEntitySchema,
-} from '../schemas/entity.schemas';
+import { getOnboarding, updateOnboarding } from '../controllers/entity.controller';
 
 const router = Router();
 
-router.post('/', validateSchema(createEntitySchema), createEntity);
-router.patch('/:id', validateSchema(updateEntitySchema), updateEntity);
-router.get('/:id', getEntity);
-router.post('/claim', validateSchema(claimEntitySchema), claimEntity);
+router.get('/:id/onboarding',authenticate, getOnboarding);
+router.patch('/:id/onboarding', authenticate, updateOnboarding);
+
 
 export default router;
