@@ -1,6 +1,10 @@
 import { Request, Response } from 'express';
 import { HTTP_STATUS } from '@/constants';
-import { getEntityOnboarding, updateEntityOnboarding } from '../service/entity.service';
+import {
+  getEntityOnboarding,
+  updateEntityOnboarding,
+  uploadEntityImageService,
+} from '../service/entity.service';
 import { sendError, sendSuccess } from '@/utils';
 
 export const getOnboarding = async (req: Request, res: Response) => {
@@ -36,5 +40,29 @@ export const updateOnboarding = async (req: Request, res: Response) => {
   } catch (err: any) {
     console.error('Update Onboarding Error:', err);
     return sendError(res, HTTP_STATUS.INTERNAL_ERROR, 'Failed to update onboarding');
+  }
+};
+
+export const uploadImage = async (req: Request, res: Response) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file provided' });
+    }
+
+    const entityId = req.params.id;
+
+    const { secure_url, updatedEntity } = await uploadEntityImageService(entityId, req.file.buffer);
+
+    res.status(200).json({
+      message: 'Image uploaded successfully',
+      imageUrl: secure_url,
+      entity: updatedEntity,
+    });
+  } catch (error: any) {
+    console.error('Image upload failed:', error);
+    res.status(500).json({
+      message: 'Image upload failed',
+      error: error.message,
+    });
   }
 };

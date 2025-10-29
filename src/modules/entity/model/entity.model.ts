@@ -14,7 +14,7 @@ export interface IEntity extends Document {
   subtype?: string;
   annualGrantmakingPR?: number;
   impactAreas?: string[];
-
+  documentImage: string;
   // Onboarding
   onboarding: {
     flowType: 'government' | 'grantmaker_intermediary' | 'funder_intermediary_nonprofit';
@@ -91,7 +91,7 @@ const entitySchema = new Schema<IEntity>(
     subtype: { type: String },
     annualGrantmakingPR: { type: Number },
     impactAreas: [{ type: String }],
-
+    documentImage: { type: String, required: false },
     onboarding: {
       flowType: {
         type: String,
