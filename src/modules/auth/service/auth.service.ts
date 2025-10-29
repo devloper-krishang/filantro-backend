@@ -107,6 +107,7 @@ export const checkSession = async (userId: string) => {
           name: user.name,
           email: user.email,
           isEmailVerified: user.isEmailVerified,
+          entityType: user.entityType
         },
       },
     };
@@ -122,6 +123,7 @@ export const checkSession = async (userId: string) => {
         name: user.name,
         email: user.email,
         isEmailVerified: user.isEmailVerified,
+        entityType: user.entityType
       },
     },
   };
