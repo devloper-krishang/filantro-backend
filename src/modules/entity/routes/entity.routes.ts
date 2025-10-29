@@ -4,8 +4,7 @@ import { getOnboarding, updateOnboarding } from '../controllers/entity.controlle
 
 const router = Router();
 
-router.get('/:id/onboarding',authenticate, getOnboarding);
+router.get('/:id/onboarding', authenticate, getOnboarding);
 router.patch('/:id/onboarding', authenticate, updateOnboarding);
-
 
 export default router;

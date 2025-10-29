@@ -1,9 +1,7 @@
-
 import { Types } from 'mongoose';
 import { Entity } from '../model/entity.model';
 import { User } from '@/modules/user';
 import { UpdateOnboardingParams } from '../interface/entity.types';
-
 
 export const handleEntityAssignment = async (userId: string) => {
   const user = await User.findById(userId);
@@ -29,8 +27,8 @@ export const handleEntityAssignment = async (userId: string) => {
           user.entityType === 'government'
             ? 'government'
             : user.entityType === 'intermediary'
-            ? 'grantmaker_intermediary'
-            : 'funder_intermediary_nonprofit',
+              ? 'grantmaker_intermediary'
+              : 'funder_intermediary_nonprofit',
         currentStepIndex: 0,
         steps: [],
         onboardingStatus: 'not_started',
@@ -38,7 +36,6 @@ export const handleEntityAssignment = async (userId: string) => {
       },
     });
 
-    
     await entity.save();
   }
 
@@ -54,7 +51,6 @@ export const getEntityOnboarding = async (entityId: string) => {
   if (!entity) return null;
   return entity.onboarding;
 };
-
 
 export const updateEntityOnboarding = async (
   entityId: string,

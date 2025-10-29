@@ -24,11 +24,10 @@ export type ClaimEntityInput = {
   message?: string;
 };
 
-
 export interface UpdateOnboardingParams {
   currentStepIndex: number;
   stepKey?: string;
   data: Record<string, any>;
-  status?: 'not_started' | 'in_progress' | 'completed'; 
+  status?: 'not_started' | 'in_progress' | 'completed';
   userId?: string;
 }

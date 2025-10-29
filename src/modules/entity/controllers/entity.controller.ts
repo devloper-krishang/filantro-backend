@@ -3,7 +3,6 @@ import { HTTP_STATUS } from '@/constants';
 import { getEntityOnboarding, updateEntityOnboarding } from '../service/entity.service';
 import { sendError, sendSuccess } from '@/utils';
 
-
 export const getOnboarding = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -25,7 +24,13 @@ export const updateOnboarding = async (req: Request, res: Response) => {
     const { currentStepIndex, stepKey, data, status } = req.body;
     const userId = (req as any).user?._id;
 
-    const updated = await updateEntityOnboarding(id, { currentStepIndex, stepKey, data, status, userId });
+    const updated = await updateEntityOnboarding(id, {
+      currentStepIndex,
+      stepKey,
+      data,
+      status,
+      userId,
+    });
 
     return sendSuccess(res, 'Onboarding step updated successfully', updated);
   } catch (err: any) {
