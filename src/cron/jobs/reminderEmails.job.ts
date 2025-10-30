@@ -1,11 +1,11 @@
 import { addDays, addHours } from 'date-fns';
-import { sendEmail } from '@/utils';
-import { logger } from '@/utils/logger';
-import { renderVerifyReminderTemplate } from '@/emails/templates/verifyReminder';
-import { renderVerifyDeletionNoticeTemplate } from '@/emails/templates/verifyDeletionNotice';
-import { IUser, User } from '@/modules/user/model/user.model';
-import env from '@/config/env';
-import { generateToken } from '@/utils/jwt';
+import { sendEmail } from '../../utils';
+import { logger } from '../../utils/logger';
+import { renderVerifyReminderTemplate } from '../../emails/templates/verifyReminder';
+import { renderVerifyDeletionNoticeTemplate } from '../../emails/templates/verifyDeletionNotice';
+import { IUser, User } from '../../modules/user/model/user.model';
+import env from '../../config/env';
+import { generateToken } from '../../utils/jwt';
 
 // Placeholder: replace with your actual model and query logic
 type EventLike = never;

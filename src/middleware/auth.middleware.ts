@@ -1,6 +1,6 @@
-import env from '@/config/env';
-import { HTTP_STATUS } from '@/constants';
-import { sendError } from '@/utils';
+import env from '../config/env';
+import { HTTP_STATUS } from '../constants';
+import { sendError } from '../utils';
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 

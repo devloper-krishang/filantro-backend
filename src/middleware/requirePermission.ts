@@ -1,5 +1,5 @@
-import { userHasPermission } from '@/helpers/checkPermission';
-import { ForbiddenError, UnauthorizedError } from '@/utils';
+import { userHasPermission } from '../helpers/checkPermission';
+import { ForbiddenError, UnauthorizedError } from '../utils';
 import { Request, Response, NextFunction } from 'express';
 
 /**
