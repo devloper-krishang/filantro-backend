@@ -1,5 +1,6 @@
 import express from 'express';
 import apiRouter from './routes';
+import { errorHandler } from './middleware';
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.get('/health', (req, res) => {
 
 app.use('/api/v1', apiRouter);
 
+app.use(errorHandler);
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.originalUrl}`);
   next();
