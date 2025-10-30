@@ -1,18 +1,17 @@
-import { IUser, User } from '@/modules/user/model/user.model';
+import { IUser, User } from '../../../modules/user/model/user.model';
 import {
   ConflictError,
   generateToken,
   NotFoundError,
   UnauthorizedError,
   verifyToken,
-} from '@/utils';
-import env from '@/config/env';
-import { sendEmail } from '@/utils';
-import { renderVerifyEmailCodeTemplate } from '@/emails/templates/verifyEmail';
-import { AUTH_MESSAGES } from '@/constants/messages';
+} from '../../../utils';
+import env from '../../../config/env';
+import { sendEmail } from '../../../utils';
+import { AUTH_MESSAGES } from '../../../constants/messages';
 import { comparePassword, hashPassword } from '../utils/authUtils';
-import { renderResetPasswordTemplate } from '@/emails/templates/resetPassword';
-import * as db from '@/utils/dbUtils';
+import { renderResetPasswordTemplate } from '../../../emails/templates/resetPassword';
+import * as db from '../../../utils/dbUtils';
 import {
   SignupInput,
   LoginInput,
@@ -20,7 +19,7 @@ import {
   VerifyEmailInput,
   ForgotPasswordInput,
 } from '../interface/auth.types';
-import { registerEmail } from '@/emails/service/sendEmail';
+import { registerEmail } from '../../../emails/service/sendEmail';
 import { Types } from 'mongoose';
 
 export const registerService = async ({

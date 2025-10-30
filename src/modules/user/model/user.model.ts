@@ -1,5 +1,5 @@
 import { Schema, model, Document, Types } from 'mongoose';
-import { MODEL_NAMES } from '@/constants/models';
+import { MODEL_NAMES } from '../../../constants/models';
 
 export interface IUser extends Document {
   name: string;

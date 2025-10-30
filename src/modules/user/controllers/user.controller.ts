@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { HTTP_STATUS } from '@/constants';
-import { sendSuccess, sendError } from '@/utils';
+import { HTTP_STATUS } from '../../../constants';
+import { sendSuccess, sendError } from '../../../utils';
 import { verifyEmailCode, resendVerificationEmail } from '../service/user.service';
 
 export const verifyCode = async (req: Request, res: Response) => {

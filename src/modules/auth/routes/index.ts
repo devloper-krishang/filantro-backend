@@ -17,7 +17,7 @@ import {
   resendVerificationSchema,
   authCheckSchema,
 } from '../schemas/auth.schemas';
-import { authenticate, validateSchema } from '@/middleware';
+import { authenticate, validateSchema } from '../../../middleware';
 
 const router = Router();
 

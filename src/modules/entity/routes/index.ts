@@ -5,7 +5,7 @@ import {
   getEntity,
   claimEntity,
 } from '../controllers/entity.controller';
-import { validateSchema } from '@/middleware';
+import { validateSchema } from '../../../middleware';
 import {
   createEntitySchema,
   updateEntitySchema,

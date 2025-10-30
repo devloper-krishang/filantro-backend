@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { resendEmail, verifyCode } from '../controllers/user.controller';
-import { authenticate } from '@/middleware';
+import { authenticate } from '../../../middleware';
 
 const router = Router();
 
