@@ -16,8 +16,8 @@
     "seed:permissions": "ts-node  -r tsconfig-paths/register src/seeders/modularPermissionsSeeder.ts"
   },
   "_moduleAliases": {
-  "@": "dist"
-},
+    "@": "dist"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
