@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import * as EntityService from '../service/entity.service';
-import { sendSuccess } from '@/utils/apis/responseHandler';
-import { catchAsync } from '@/utils/catchAsync';
-import { HTTP_STATUS, RESPONSE_TAGS } from '@/constants';
+import { sendSuccess } from '../../../utils/apis/responseHandler';
+import { catchAsync } from '../../../utils/catchAsync';
+import { HTTP_STATUS, RESPONSE_TAGS } from '../../../constants';
 
 export const createEntity = catchAsync(async (req: Request, res: Response) => {
   const created = await EntityService.createEntityService(req.body, (req as any).user?.id);

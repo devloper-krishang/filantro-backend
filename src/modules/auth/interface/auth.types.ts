@@ -1,5 +1,3 @@
-import { EntityType } from '@/modules/entity';
-
 interface LoginInput {
   email: string;
   password: string;

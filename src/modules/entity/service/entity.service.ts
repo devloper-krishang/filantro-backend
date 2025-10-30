@@ -1,7 +1,7 @@
 import { Types } from 'mongoose';
 import { Entity } from '../model/entity.model';
 import { CreateEntityInput, UpdateEntityInput, ClaimEntityInput } from '../interface/entity.types';
-import { ConflictError, NotFoundError, cleanObject } from '@/utils';
+import { ConflictError, NotFoundError, cleanObject } from '../../../utils';
 import { ENTITY_GROUP_BY_TYPE } from '../utils/constants';
 
 export async function createEntityService(input: CreateEntityInput, createdBy: string) {

@@ -1,5 +1,5 @@
 import { Schema, model, Document, Types } from 'mongoose';
-import { MODEL_NAMES } from '@/constants/models';
+import { MODEL_NAMES } from '../../../constants/models';
 import { CLAIM_STATUSES, DOCUMENT_STATUSES, ENTITY_GROUPS, ENTITY_TYPES } from '../utils/constants';
 
 export type EntityType = (typeof ENTITY_TYPES)[number];

@@ -1,6 +1,6 @@
-import { IRole, Role } from '@/models/role';
-import { IUser, User } from '@/modules/user';
-import { findById, findOne } from '@/utils';
+import { IRole, Role } from '../models/role';
+import { IUser, User } from '../modules/user';
+import { findById, findOne } from '../utils';
 
 /**
  * Checks if the user has a specific permission (via key)

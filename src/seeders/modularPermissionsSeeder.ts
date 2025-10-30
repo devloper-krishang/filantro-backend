@@ -1,9 +1,9 @@
 import bcrypt from 'bcryptjs';
-import { MODULES } from '@/config/permissions.config';
-import { ROLES } from '@/config/roles.config';
-import { Permission } from '@/models/permission';
-import { Role } from '@/models/role';
-import { User } from '@/modules/user';
+import { MODULES } from '..//config/permissions.config';
+import { ROLES } from '../config/roles.config';
+import { Permission } from '../models/permission';
+import { Role } from '../models/role';
+import { User } from '../modules/user';
 
 function toKey(name: string) {
   return name.toLowerCase().replace(/\s+/g, '_');

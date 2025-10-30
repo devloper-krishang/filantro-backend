@@ -1,6 +1,7 @@
 import express from 'express';
 import apiRouter from './routes';
 import { errorHandler } from './middleware';
+import 'module-alias/register';
 
 const app = express();
 

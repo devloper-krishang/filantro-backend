@@ -1,6 +1,6 @@
 import { User } from '../model/user.model';
 import { EmailVerification } from '../model/emailVerification.model';
-import { resendEmailAgain } from '@/emails/service/sendEmail';
+import { resendEmailAgain } from '../../../emails/service/sendEmail';
 import { Types } from 'mongoose';
 
 export const verifyEmailCode = async (userId: string, code: string) => {

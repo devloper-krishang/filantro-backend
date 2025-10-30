@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { sendSuccess, catchAsync } from '@/utils';
-import { AUTH_MESSAGES, HTTP_STATUS, RESPONSE_TAGS } from '@/constants';
+import { sendSuccess, catchAsync } from '../../../utils';
+import { AUTH_MESSAGES, HTTP_STATUS, RESPONSE_TAGS } from '../../../constants';
 import * as AuthService from '../service/auth.service';
 
 export const register = catchAsync(async (req: Request, res: Response): Promise<void> => {

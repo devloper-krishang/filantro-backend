@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { TagType } from '../../types/response.types';
-import { HTTP_STATUS } from '@/constants';
-import { cleanObject } from '@/utils/cleanObject';
+import { HTTP_STATUS } from '../../constants';
+import { cleanObject } from '../../utils/cleanObject';
 
 export const sendSuccess = (
   res: Response,

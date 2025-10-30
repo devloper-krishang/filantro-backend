@@ -1,6 +1,6 @@
 import nodemailer, { Transporter } from 'nodemailer';
 import { google } from 'googleapis';
-import env from '@/config/env';
+import env from '../config/env';
 
 const { user, clientId, clientSecret, redirectUri, refreshToken } = env.email.auth;
 
