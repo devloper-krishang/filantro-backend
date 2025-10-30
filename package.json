@@ -4,11 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only --project tsconfig.json -r tsconfig-paths/register src/server.ts",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "tsc",
-    "start": "cross-env NODE_ENV=production node dist/index.js",
-    "test": "cross-env NODE_ENV=test jest",
-    "g": "hygen",
+    "start": "node dist/index.js",
     "prepare": "husky install",
     "postinstall": "node setup-husky.js",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
