@@ -6,9 +6,13 @@ const app = express();
 // Middleware
 app.use(express.json());
 
-// Test route
+// health route
 app.get('/health', (req, res) => {
-  res.send('Simple backend is running!');
+  res.status(200).json({
+    status: 'ok',
+    message: 'Server is running',
+    timestamp: new Date().toISOString(),
+  });
 });
 
 app.use('/api/v1', apiRouter);
