@@ -1,6 +1,6 @@
 import { HTTP_STATUS } from '../constants';
 import { Request, Response, NextFunction } from 'express';
-import { sendError } from 'utils';
+import { sendError } from '../utils';
 import { z, ZodSchema } from 'zod';
 
 type ValidationSources = 'body' | 'query' | 'params';
