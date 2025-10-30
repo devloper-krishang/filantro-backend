@@ -1,4 +1,4 @@
-import { HTTP_STATUS } from '@/constants';
+import { HTTP_STATUS } from '../../constants';
 
 export class HttpError extends Error {
   public statusCode: number;
