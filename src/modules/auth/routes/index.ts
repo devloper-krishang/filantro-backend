@@ -25,7 +25,7 @@ const router = Router();
  * Login user
  * @auth public
  */
-// router.post('/login', validateSchema(loginSchema), login);
+router.post('/login', validateSchema(loginSchema), login);
 
 /**
  * Register user
@@ -39,30 +39,30 @@ router.post('/register', validateSchema(registerSchema), register);
  * Send password reset link
  * @auth public
 //  */
-// router.post('/forgot-password', validateSchema(forgotPasswordSchema), forgotPassword);
+router.post('/forgot-password', validateSchema(forgotPasswordSchema), forgotPassword);
 
 // /**
 //  * Reset password
 //  * @auth public
 //  */
-// router.post('/reset-password/:token', validateSchema(resetPasswordSchema), resetPassword);
+router.post('/reset-password/:token', validateSchema(resetPasswordSchema), resetPassword);
 
 // /**
 //  * Verify email
 //  * @auth public
 //  */
-// router.get('/verify-email/:token', verifyEmail);
+router.get('/verify-email/:token', verifyEmail);
 
 // /**
 //  * Resend email verification
 //  * @auth public
 //  */
-// router.post('/resend-verification', validateSchema(resendVerificationSchema), resendVerification);
+router.post('/resend-verification', validateSchema(resendVerificationSchema), resendVerification);
 
 // /**
 //  * Logout user - invalidate token
 //  * @auth protected
 //  */
-// router.post('/logout', logout);
+router.post('/logout', logout);
 
 export default router;

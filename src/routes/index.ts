@@ -7,8 +7,8 @@ import entityRoutes from '../modules/entity/routes';
 const apiRouter = Router();
 
 apiRouter.use('/auth', authRoutes);
-// apiRouter.use('/user', userRoutes);
-// apiRouter.use('/entity', entityRoutes);
+apiRouter.use('/user', userRoutes);
+apiRouter.use('/entity', entityRoutes);
 // apiRouter.use('/audit', auditRoutes);
 
 export default apiRouter;
