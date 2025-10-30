@@ -11,7 +11,7 @@
     "maxNodeModuleJsDepth": 0,
     "baseUrl": "./src",
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["./*"]
     }
   },
   "include": ["src", "api"],
