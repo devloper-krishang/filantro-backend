@@ -1,8 +1,9 @@
 import { Types } from 'mongoose';
 import { Entity } from '../model/entity.model';
-import { CreateEntityInput, UpdateEntityInput, ClaimEntityInput } from '../interface/entity.types';
-import { ConflictError, NotFoundError, cleanObject } from '../../../utils';
-import { ENTITY_GROUP_BY_TYPE } from '../utils/constants';
+import { User } from '@/modules/user';
+import { UpdateOnboardingParams } from '../interface/entity.types';
+import cloudinary from '@/config/cloudinary';
+
 
 export const handleEntityAssignment = async (userId: string) => {
   const user = await User.findById(userId);

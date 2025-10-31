@@ -1,17 +1,12 @@
 import { authenticate } from '@/middleware';
 import { Router } from 'express';
 import {
-  createEntity,
-  updateEntity,
-  getEntity,
-  claimEntity,
+  getOnboarding,
+  updateOnboarding,
+  uploadImage,
 } from '../controllers/entity.controller';
-import { validateSchema } from '../../../middleware';
-import {
-  createEntitySchema,
-  updateEntitySchema,
-  claimEntitySchema,
-} from '../schemas/entity.schemas';
+import upload from '../../../middleware/upload.middleware';
+
 
 const router = Router();
 

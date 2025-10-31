@@ -5,10 +5,11 @@ import 'module-alias/register';
 
 dotenv.config();
 
-const MONGO_URI = process.env.MONGO_URI || '';
+const MONGO_URI = process.env.PORT || '';
 
 const setup = async () => {
   await connectDB();
+  console.log(MONGO_URI);
 };
 
 setup();
