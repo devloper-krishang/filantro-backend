@@ -1,4 +1,4 @@
-import { trimAfter } from '@/middleware';
+import { trimAfter } from '../../../middleware';
 import { z } from 'zod';
 
 export const createUserSchema = z.object({

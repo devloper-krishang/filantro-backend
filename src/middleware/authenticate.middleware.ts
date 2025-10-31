@@ -1,6 +1,6 @@
-import { HTTP_STATUS } from '@/constants';
-import { RoleType } from '@/types';
-import { sendError } from '@/utils';
+import { HTTP_STATUS } from '../constants';
+import { RoleType } from '../types';
+import { sendError } from '../utils';
 import { NextFunction, Request, Response } from 'express';
 
 export const authorizeRoles = (...roles: RoleType[]) => {

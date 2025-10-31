@@ -1,8 +1,8 @@
-import { sendEmail } from '@/utils';
-import { generateNumericCode } from '@/utils/generateNumericCode';
+import { sendEmail } from '../../utils';
+import { generateNumericCode } from '../../utils/generateNumericCode';
 import { renderVerifyEmailCodeTemplate } from '../templates/verifyEmail';
 import { Types } from 'mongoose';
-import { EmailVerification } from '@/modules/user/model/emailVerification.model';
+import { EmailVerification } from '../../modules/user/model/emailVerification.model';
 const EMAIL_VERIFICATION_TYPE = 'email-verification' as const;
 const RESEND_LIMIT_WINDOW_HOURS = 2;
 

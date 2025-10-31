@@ -1,11 +1,8 @@
 import { Request, Response } from 'express';
-import { HTTP_STATUS } from '@/constants';
-import {
-  getEntityOnboarding,
-  updateEntityOnboarding,
-  uploadEntityImageService,
-} from '../service/entity.service';
-import { sendError, sendSuccess } from '@/utils';
+import * as EntityService from '../service/entity.service';
+import { sendSuccess } from '../../../utils/apis/responseHandler';
+import { catchAsync } from '../../../utils/catchAsync';
+import { HTTP_STATUS, RESPONSE_TAGS } from '../../../constants';
 
 export const getOnboarding = async (req: Request, res: Response) => {
   try {

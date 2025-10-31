@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { trimAfter } from '@/middleware';
+import { trimAfter } from '../../../middleware';
 import { ENTITY_TYPES } from '../utils/constants';
 
 export const createEntitySchema = z.object({

@@ -1,4 +1,4 @@
-import env from '@/config/env';
+import env from '../config/env';
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET: jwt.Secret = env.jwt.secret;

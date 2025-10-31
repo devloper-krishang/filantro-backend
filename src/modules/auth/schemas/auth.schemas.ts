@@ -1,5 +1,5 @@
-import { VALIDATION_MESSAGES } from '@/constants';
-import { trimAfter } from '@/middleware';
+import { VALIDATION_MESSAGES } from '../../../constants';
+import { trimAfter } from '../../../middleware';
 import { z } from 'zod';
 
 export const loginSchema = z.object({

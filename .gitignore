@@ -70,6 +70,6 @@ commands
 
 # Lock files
 package-lock.json
-yarn.lock
+# yarn.lock
 
 src/config/permissionsRegistry.ts
