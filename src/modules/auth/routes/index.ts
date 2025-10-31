@@ -33,7 +33,7 @@ router.post('/login', validateSchema(loginSchema), login);
  */
 router.post('/register', validateSchema(registerSchema), register);
 
-// router.get('/me', authenticate, authCheck);
+router.get('/me', authenticate, authCheck);
 
 /**
  * Send password reset link
@@ -45,7 +45,7 @@ router.post('/forgot-password', validateSchema(forgotPasswordSchema), forgotPass
 //  * Reset password
 //  * @auth public
 //  */
-router.post('/reset-password/:token', validateSchema(resetPasswordSchema), resetPassword);
+router.post('/reset-password', validateSchema(resetPasswordSchema), resetPassword);
 
 // /**
 //  * Verify email
