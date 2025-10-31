@@ -1,55 +1,108 @@
 import { Types } from 'mongoose';
 import { Entity } from '../model/entity.model';
-import { CreateEntityInput, UpdateEntityInput, ClaimEntityInput } from '../interface/entity.types';
-import { ConflictError, NotFoundError, cleanObject } from '../../../utils';
-import { ENTITY_GROUP_BY_TYPE } from '../utils/constants';
+import { User } from '@/modules/user';
+import { UpdateOnboardingParams } from '../interface/entity.types';
+import cloudinary from '@/config/cloudinary';
 
-export async function createEntityService(input: CreateEntityInput, createdBy: string) {
-  const existing = await Entity.findOne({ $or: [{ slug: input.slug }, { name: input.name }] });
-  if (existing) throw new ConflictError('Entity with same name/slug already exists');
-  const group = ENTITY_GROUP_BY_TYPE[input.entityType];
-  const doc = await Entity.create({
-    ...input,
-    group,
-    createdBy: new Types.ObjectId(createdBy),
-  });
-  return doc;
-}
 
-export async function updateEntityService(entityId: string, input: UpdateEntityInput) {
-  const entity = await Entity.findById(entityId);
-  if (!entity) throw new NotFoundError('Entity not found');
-  Object.assign(entity, cleanObject(input));
-  await entity.save();
-  return entity;
-}
+export const handleEntityAssignment = async (userId: string) => {
+  const user = await User.findById(userId);
+  if (!user) throw new Error('User not found');
 
-export async function getEntityService(entityId: string) {
-  const entity = await Entity.findById(entityId);
-  if (!entity) throw new NotFoundError('Entity not found');
-  return entity;
-}
-
-export async function claimEntityService(userId: string, input: ClaimEntityInput) {
-  const entity = await Entity.findById(input.entityId);
-  if (!entity) throw new NotFoundError('Entity not found');
-
-  if (entity.isClaimed) {
-    // Entity already claimed: add request for admin approval
-    entity.claimRequests.push({
-      userId: new Types.ObjectId(userId),
-      status: 'pending',
-      requestedAt: new Date(),
-      notes: input.message,
-    });
-    await entity.save();
-    return { flow: 'approval_request', entityId: entity.id };
+  if (!user.entityName || !user.entityType) {
+    throw new Error('User registration data incomplete');
   }
 
-  // Not claimed: mark provisional claim and require documents
-  entity.isClaimed = true;
-  entity.claimedBy = new Types.ObjectId(userId);
-  entity.admins.push(new Types.ObjectId(userId));
+  let entity = await Entity.findOne({
+    name: user.entityName.trim(),
+    type: user.entityType,
+  });
+
+  if (!entity) {
+    entity = await Entity.create({
+      name: user.entityName.trim(),
+      type: user.entityType,
+      onboarding: {
+        flowType:
+          user.entityType === 'government'
+            ? 'government'
+            : user.entityType === 'intermediary'
+              ? 'grantmaker_intermediary'
+              : 'funder_intermediary_nonprofit',
+        currentStepIndex: 0,
+        steps: [],
+        onboardingStatus: 'not_started',
+        progressPercent: 0,
+      },
+    });
+
+    await entity.save();
+  }
+
+  user.entityId = entity._id as Types.ObjectId;
+  await user.save();
+
+  return entity;
+};
+
+export const getEntityOnboarding = async (entityId: string) => {
+  const entity = await Entity.findById(entityId);
+  if (!entity) return null;
+  return entity.onboarding;
+};
+
+export const updateEntityOnboarding = async (
+  entityId: string,
+  { currentStepIndex, stepKey, data, status, userId }: UpdateOnboardingParams
+) => {
+  const entity = await Entity.findById(entityId);
+  if (!entity) throw new Error('Entity not found');
+
+  const onboarding = entity.onboarding;
+  if (!onboarding?.steps?.length) throw new Error('No onboarding steps initialized');
+
+  const step =
+    onboarding.steps.find((s) => s.key === stepKey) || onboarding.steps[currentStepIndex];
+  if (!step) throw new Error('Invalid step reference');
+
+  step.data = { ...step.data, ...data };
+  if (status) step.status = status;
+  step.lastUpdatedAt = new Date();
+  step.lastUpdatedBy = userId ? new Types.ObjectId(userId) : undefined;
+
+  const total = onboarding.steps.length;
+  const completed = onboarding.steps.filter((s) => s.status === 'completed').length;
+  onboarding.progressPercent = Math.round((completed / total) * 100);
+  onboarding.onboardingStatus =
+    completed === total ? 'completed' : completed > 0 ? 'in_progress' : 'not_started';
+
+  onboarding.currentStepIndex = currentStepIndex;
+  onboarding.lastActivityAt = new Date();
+
   await entity.save();
-  return { flow: 'provisional_claim', entityId: entity.id };
-}
+  return onboarding;
+};
+
+export const uploadEntityImageService = async (entityId: string, fileBuffer: Buffer) => {
+  const uploadResult: any = await new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream({ folder: 'entities' }, (error, result) => {
+      if (error) return reject(error);
+      resolve(result);
+    });
+    stream.end(fileBuffer);
+  });
+
+  const { secure_url, public_id } = uploadResult;
+
+  const updatedEntity = await Entity.findByIdAndUpdate(
+    entityId,
+    { documentImage: secure_url },
+    { new: true }
+  );
+
+  return {
+    secure_url,
+    public_id,
+    updatedEntity,
+  };
+};

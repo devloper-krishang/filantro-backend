@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { HTTP_STATUS } from '../../../constants';
 import { sendSuccess, sendError } from '../../../utils';
 import { verifyEmailCode, resendVerificationEmail } from '../service/user.service';
+import { handleEntityAssignment } from '@/modules/entity';
 
 export const verifyCode = async (req: Request, res: Response) => {
   try {
@@ -17,6 +18,8 @@ export const verifyCode = async (req: Request, res: Response) => {
     if (!result.success) {
       return sendError(res, HTTP_STATUS.BAD_REQUEST, result.message);
     }
+
+    await handleEntityAssignment(userId);
 
     return sendSuccess(res, result.message, { verified: true }, HTTP_STATUS.OK);
   } catch (err: any) {
