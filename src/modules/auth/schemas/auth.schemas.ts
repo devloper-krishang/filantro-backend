@@ -33,6 +33,8 @@ export const forgotPasswordSchema = z.object({
 });
 
 export const resetPasswordSchema = z.object({
+  email: trimAfter(z.string().email(VALIDATION_MESSAGES.INVALID_EMAIL)),
+  code: trimAfter(z.string().min(6, VALIDATION_MESSAGES.REQUIRED)),
   password: trimAfter(z.string().min(6, VALIDATION_MESSAGES.PASSWORD_MIN)),
 });
 

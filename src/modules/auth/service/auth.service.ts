@@ -7,10 +7,8 @@ import {
   verifyToken,
 } from '../../../utils';
 import env from '../../../config/env';
-import { sendEmail } from '../../../utils';
 import { AUTH_MESSAGES } from '../../../constants/messages';
 import { comparePassword, hashPassword } from '../utils/authUtils';
-import { renderResetPasswordTemplate } from '../../../emails/templates/resetPassword';
 import * as db from '../../../utils/dbUtils';
 import {
   SignupInput,
@@ -19,8 +17,9 @@ import {
   VerifyEmailInput,
   ForgotPasswordInput,
 } from '../interface/auth.types';
-import { registerEmail } from '../../../emails/service/sendEmail';
+import { registerEmail, sendPasswordResetCode } from '../../../emails/service/sendEmail';
 import { Types } from 'mongoose';
+import { EmailVerification } from '../../user/model/emailVerification.model';
 
 export const registerService = async ({
   name,
@@ -129,20 +128,27 @@ export const checkSession = async (userId: string) => {
 export const forgotPasswordService = async ({ email }: ForgotPasswordInput) => {
   const user = await db.findOne<IUser>(User, { email });
   if (!user) throw new NotFoundError(AUTH_MESSAGES.ERROR.EMAIL_NOT_FOUND);
-
-  const token = generateToken({ id: user._id }, env.jwt.resetPasswordExpirationMinutes);
-  const resetLink = `/auth/reset-password/${token}`;
-  await sendEmail({
-    to: email,
-    subject: 'Reset your password',
-    html: renderResetPasswordTemplate(resetLink),
-  });
+  await sendPasswordResetCode(user._id as Types.ObjectId, email);
 };
 
-export const resetPasswordService = async ({ token, newPassword }: ResetPasswordInput) => {
-  const payload = verifyToken(token);
-  const hashed = await hashPassword(newPassword);
-  await db.updateOne<IUser>(User, payload.id, { password: hashed });
+export const resetPasswordService = async ({ email, code, password }: ResetPasswordInput) => {
+  const user = await db.findOne<IUser>(User, { email }, '_id email');
+  if (!user) throw new NotFoundError(AUTH_MESSAGES.ERROR.EMAIL_NOT_FOUND);
+
+  const verification = await EmailVerification.findOne({
+    userId: user._id,
+    email,
+    code,
+    type: 'password-reset',
+  });
+
+  if (!verification) throw new UnauthorizedError('Invalid or expired reset code');
+
+  const hashed = await hashPassword(password);
+  await Promise.all([
+    db.updateOne<IUser>(User, user._id as any, { password: hashed }),
+    EmailVerification.deleteOne({ _id: verification._id }),
+  ]);
 };
 
 export const verifyEmailService = async ({ token }: VerifyEmailInput) => {

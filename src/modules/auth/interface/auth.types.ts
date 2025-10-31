@@ -22,8 +22,9 @@ interface SignupInput {
 }
 
 interface ResetPasswordInput {
-  token: string;
-  newPassword: string;
+  email: string;
+  code: string;
+  password: string;
 }
 
 interface VerifyEmailInput {
