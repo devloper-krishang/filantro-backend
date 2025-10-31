@@ -1,15 +1,21 @@
 import dotenv from 'dotenv';
 import app from './app';
 import { connectDB } from './config/db';
+import env from './config/env';
 import 'module-alias/register';
 
 dotenv.config();
 
-const MONGO_URI = process.env.PORT || '';
-
 const setup = async () => {
   await connectDB();
-  console.log(MONGO_URI);
+
+
+  // if (process.env.VERCEL !== '1') {
+    const port = env?.port || Number(process.env.PORT) || 3000;
+    app.listen(port, () => {
+      console.log(`🚀 Server is running at http://localhost:${port}`);
+    });
+  // }
 };
 
 setup();
