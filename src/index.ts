@@ -3,7 +3,7 @@ import app from './app';
 import { connectDB } from './config/db';
 import env from './config/env';
 import 'module-alias/register';
-import { env } from 'process';
+
 
 dotenv.config();
 
