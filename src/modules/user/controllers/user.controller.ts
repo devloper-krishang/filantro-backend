@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { HTTP_STATUS } from '../../../constants';
 import { sendSuccess, sendError } from '../../../utils';
 import { verifyEmailCode, resendVerificationEmail } from '../service/user.service';
-import { handleEntityAssignment } from '@/modules/entity';
+import { handleEntityAssignment } from '../../../modules/entity';
 
 export const verifyCode = async (req: Request, res: Response) => {
   try {
