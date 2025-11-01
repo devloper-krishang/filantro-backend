@@ -11,12 +11,12 @@ const setup = async () => {
   await connectDB();
 
 
-  if (process.env.NODE_ENV === 'development') {
-    const port = env?.port || Number(process.env.PORT) || 3000;
-    app.listen(port, () => {
-      console.log(`🚀 Server is running at http://localhost:${port}`);
-    });
-  }
+  // if (process.env.NODE_ENV === 'development') {
+  //   const port = env?.port || Number(process.env.PORT) || 3000;
+  //   app.listen(port, () => {
+  //     console.log(`🚀 Server is running at http://localhost:${port}`);
+  //   });
+  // }
 };
 
 setup();
