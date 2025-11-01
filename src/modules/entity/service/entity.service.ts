@@ -1,9 +1,8 @@
 import { Types } from 'mongoose';
 import { Entity } from '../model/entity.model';
-import { User } from '@/modules/user';
+import { User } from '../../../modules/user';
 import { UpdateOnboardingParams } from '../interface/entity.types';
-import cloudinary from '@/config/cloudinary';
-
+import cloudinary from '../../../config/cloudinary';
 
 export const handleEntityAssignment = async (userId: string) => {
   const user = await User.findById(userId);
@@ -58,29 +57,29 @@ export const updateEntityOnboarding = async (
   const entity = await Entity.findById(entityId);
   if (!entity) throw new Error('Entity not found');
 
-  const onboarding = entity.onboarding;
-  if (!onboarding?.steps?.length) throw new Error('No onboarding steps initialized');
+  // const onboarding = entity.onboarding;
+  // if (!onboarding?.steps?.length) throw new Error('No onboarding steps initialized');
 
-  const step =
-    onboarding.steps.find((s) => s.key === stepKey) || onboarding.steps[currentStepIndex];
-  if (!step) throw new Error('Invalid step reference');
+  // const step =
+  //   onboarding.steps.find((s) => s.key === stepKey) || onboarding.steps[currentStepIndex];
+  // if (!step) throw new Error('Invalid step reference');
 
-  step.data = { ...step.data, ...data };
-  if (status) step.status = status;
-  step.lastUpdatedAt = new Date();
-  step.lastUpdatedBy = userId ? new Types.ObjectId(userId) : undefined;
+  // step.data = { ...step.data, ...data };
+  // if (status) step.status = status;
+  // step.lastUpdatedAt = new Date();
+  // step.lastUpdatedBy = userId ? new Types.ObjectId(userId) : undefined;
 
-  const total = onboarding.steps.length;
-  const completed = onboarding.steps.filter((s) => s.status === 'completed').length;
-  onboarding.progressPercent = Math.round((completed / total) * 100);
-  onboarding.onboardingStatus =
-    completed === total ? 'completed' : completed > 0 ? 'in_progress' : 'not_started';
+  // const total = onboarding.steps.length;
+  // const completed = onboarding.steps.filter((s) => s.status === 'completed').length;
+  // onboarding.progressPercent = Math.round((completed / total) * 100);
+  // onboarding.onboardingStatus =
+  //   completed === total ? 'completed' : completed > 0 ? 'in_progress' : 'not_started';
 
-  onboarding.currentStepIndex = currentStepIndex;
-  onboarding.lastActivityAt = new Date();
+  // onboarding.currentStepIndex = currentStepIndex;
+  // onboarding.lastActivityAt = new Date();
 
   await entity.save();
-  return onboarding;
+  return true;
 };
 
 export const uploadEntityImageService = async (entityId: string, fileBuffer: Buffer) => {
